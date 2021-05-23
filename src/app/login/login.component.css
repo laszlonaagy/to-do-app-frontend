@@ -30,4 +30,13 @@
 
   #login-card {
     border: 2px solid white;
-}
+  }
+
+  #login-button {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    background-color: azure;
+    color: black;
+  }
