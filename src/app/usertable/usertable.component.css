@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+  }
+
+  #userBorad {
+      margin-top: 60px;
+  }
+
+  th.mat-header-cell {
+    text-align: center !important;
+  }
+
+  td {
+    text-align: center !important;
+  }
+
+  .edit-hover :hover {
+    color: #c2185b;
+    cursor: pointer;
+  }
+
+  .delete-hover :hover {
+    color: #c2185b;
+    cursor: pointer; 
+  }

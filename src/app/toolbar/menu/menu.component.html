@@ -2,15 +2,15 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button (click)="openLoginDialog()" mat-menu-item>
+    <button  *ngIf="!loggedIn" (click)="openLoginDialog()" mat-menu-item>
       <mat-icon>login</mat-icon>
       <span>Login</span>
     </button>
-    <button mat-menu-item>
+    <button (click)="logOut()" *ngIf="loggedIn" mat-menu-item>
       <mat-icon>logout</mat-icon>
       <span>Logout</span>
     </button>
-    <button (click)="openRegistrationDialog()" mat-menu-item>
+    <button   *ngIf="!loggedIn" (click)="openRegistrationDialog()" mat-menu-item>
         <mat-icon>how_to_reg</mat-icon>
         <span>Register</span>
       </button>

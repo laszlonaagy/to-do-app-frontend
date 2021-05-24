@@ -17,6 +17,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegistrationComponent } from './registration/registration.component';
 import { MatButtonModule } from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { HttpClientModule } from '@angular/common/http';
+import { UsertableComponent } from './usertable/usertable.component';
+import { MatTableModule } from '@angular/material/table';
+import { EditComponent } from './usertable/edit/edit.component';
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 @NgModule({
   declarations: [
@@ -24,10 +30,13 @@ import { MatButtonModule } from '@angular/material/button';
     ToolbarComponent,
     MenuComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    UsertableComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -39,7 +48,10 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule,
+    MatTableModule,
+    MatFileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

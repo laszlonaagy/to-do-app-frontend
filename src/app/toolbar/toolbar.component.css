@@ -3,4 +3,12 @@
   }
 #app-title {
   margin-left: 30px;
-}  
+}
+#toolbar {
+  position: fixed;
+  top: 0px;
+}
+
+#add-button {
+  margin-right: 100px !important;
+}

@@ -1,32 +1,38 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { CustomValidators } from '../custom-validators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { CustomValidators } from 'src/app/custom-validators';
 import { MatDialogRef } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class EditComponent implements OnInit {
 
-  public signUpForm: FormGroup;
-  public failedReg = false;
+  public updateUserForm: FormGroup;
+  public failedUpdate = false;
+
+  constructor(
+  @Inject(MAT_DIALOG_DATA) public data: any,
+  private fb: FormBuilder,
+  private http: HttpClient,
+  private dialogRef: MatDialogRef<EditComponent>) {
+  this.updateUserForm = this.createUpdateUserForm();
+  }
 
   @Input() error: string | null;
 
   @Output() submitEM = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private dialogRef: MatDialogRef<RegistrationComponent>) {
-    this.signUpForm = this.createSignupForm();
-  }
-
   ngOnInit(): void {
   }
 
-  createSignupForm(): FormGroup {
+  createUpdateUserForm(): FormGroup {
     // tslint:disable-next-line: deprecation
     return this.fb.group(
       {
@@ -73,15 +79,19 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  submit() {
-    if (this.signUpForm.valid) {
-      let headers = new HttpHeaders();
+  submit(user) {
+    if (this.updateUserForm.valid) {
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      });
       headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-      this.http.post(environment.api_url + '/register', this.signUpForm.value).subscribe(response => {
+
+      this.http.put(environment.api_url + '/users/' + user.id, this.updateUserForm.value).subscribe(response => {
         localStorage['user'] = response;
         this.closeDialog();
       }, err => {
-        this.failedReg = true;
+        this.failedUpdate = true;
         console.log(err);
       });
     }

@@ -1,8 +1,8 @@
 <mat-dialog-content class="mat-typography">
-    <mat-card id="registration-card">
-    <mat-card-title>Registration</mat-card-title>
+    <mat-card id="edit-user-card">
+    <mat-card-title>Edit user</mat-card-title>
     <mat-card-content>
-    <form [formGroup]="signUpForm" (ngSubmit)="submit()">
+    <form [formGroup]="updateUserForm" (ngSubmit)="submit()">
 
      <div>
      <mat-form-field>
@@ -36,13 +36,13 @@
       </div>
     
       <div class="button">
-        <button id="registration-button" type="submit" mat-button>Register</button>
+        <button id="update-user-button" type="submit" mat-button>Save</button>
       </div>
     
     </form>
     </mat-card-content>
-    <div *ngIf="failedReg">
-      <p>Error in registration process, please try again.</p>
+    <div *ngIf="failedUpdate">
+      <p>Error in update process, please try again.</p>
     </div>
 
     </mat-card>
