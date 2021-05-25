@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
   public loggedIn = localStorage['loggedIn'];
 
   ngOnInit(): void {
+
   }
 
   openLoginDialog() {

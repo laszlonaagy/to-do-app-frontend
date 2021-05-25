@@ -28,31 +28,15 @@
     justify-content: flex-end;
   } 
 
-  #edit-user-card {
+  #add-user-card {
     border: 2px solid white;
   }
 
-  #update-user-button {
+  #add-user-button {
     padding-top: 5px;
     padding-left: 10px;
     padding-bottom: 5px;
     padding-right: 10px;
     background-color: azure;
     color: black;
-  }
-
-  .file-input {
-    display: none;
-  }
-
-  #file-upload-button {
-    background-color: #c2185b;
-  }
-
-  #user-image {
-    height: auto;
-    width: 200px;
-    margin-top: 40px !important;
-    margin-left: 15px;
-    border-radius: 10px;
   }

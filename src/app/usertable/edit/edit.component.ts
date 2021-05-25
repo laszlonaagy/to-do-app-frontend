@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,22 +6,30 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CustomValidators } from 'src/app/custom-validators';
 import { MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
+import { UploadService } from 'src/Services/upload.service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
 
   public updateUserForm: FormGroup;
   public failedUpdate = false;
+  file: File | null = null;
+  private subscription: Subscription | undefined;
+  public filename;
 
   constructor(
   @Inject(MAT_DIALOG_DATA) public data: any,
   private fb: FormBuilder,
   private http: HttpClient,
-  private dialogRef: MatDialogRef<EditComponent>) {
+  private dialogRef: MatDialogRef<EditComponent>,
+  private uploads: UploadService,
+  private sanitizer: DomSanitizer) {
   this.updateUserForm = this.createUpdateUserForm();
   }
 
@@ -29,17 +37,33 @@ export class EditComponent implements OnInit {
 
   @Output() submitEM = new EventEmitter();
 
-  ngOnInit(): void {
+  ngOnInit() {
+    console.log('data',this.data);
+
+    let headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    });
+    this.http.get(environment.api_url + '/user-image-download/' + this.data.image_path, { headers : headers , responseType: 'blob'}).subscribe(response => {
+      let unsafeImageUrl = URL.createObjectURL(response);
+      let imageUrl = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
+        this.filename = imageUrl;
+    }, err => {
+      console.log(err);
+    });
+
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   createUpdateUserForm(): FormGroup {
     // tslint:disable-next-line: deprecation
     return this.fb.group(
       {
-        name: [null,
+        name: [this.data.name,
           Validators.compose([Validators.required])],
-        email: [
-          null,
+        email: [this.data.email,
           Validators.compose([Validators.email, Validators.required, CustomValidators.patternValidator(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, {
             isValidEmail: true
           })])
@@ -79,17 +103,21 @@ export class EditComponent implements OnInit {
     );
   }
 
-  submit(user) {
+  onFileInput(files: FileList | null): void {
+    if (files) {
+      this.file = files.item(0);
+    }
+  }
+
+  submit() {
     if (this.updateUserForm.valid) {
       let headers = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       });
-      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-
-      this.http.put(environment.api_url + '/users/' + user.id, this.updateUserForm.value).subscribe(response => {
-        localStorage['user'] = response;
+      this.http.put(environment.api_url + '/users/' + this.data.id, this.updateUserForm.value, { headers : headers}).subscribe(response => {
         this.closeDialog();
+        this.subscription = this.uploads.upload(this.file, this.data.id).subscribe();
       }, err => {
         this.failedUpdate = true;
         console.log(err);

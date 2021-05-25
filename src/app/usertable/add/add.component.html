@@ -1,8 +1,8 @@
 <mat-dialog-content class="mat-typography">
-    <mat-card id="edit-user-card">
-    <mat-card-title>Edit user</mat-card-title>
+    <mat-card id="add-user-card">
+    <mat-card-title>Add user</mat-card-title>
     <mat-card-content>
-    <form [formGroup]="updateUserForm" (ngSubmit)="submit()">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
 
      <div>
      <mat-form-field>
@@ -31,29 +31,16 @@
         </mat-form-field>
       </div>
     
-      <div *ngIf="error" class="error">
-        {{ error }}
+      <div class="button">
+        <button id="add-user-button" type="submit" mat-button>Add user</button>
       </div>
-
-      <div>
-      <mat-label></mat-label>
-      <button type="button" id="file-upload-button" class="button" mat-raised-button (click)="fileInput.click()">
-        {{ file ? file.name : 'Click here to select a file' }}
-      </button>
-      <input hidden type="file" name="image" accept="image/png, image/jpeg" #fileInput (change)="onFileInput(fileInput.files)" />
-      </div>
-
-      <div id="user-image">
-        <img [src]="filename" mat-card-image>
-      </div>
-
-        <button id="update-user-button" type="submit" mat-button>Save</button>
     
     </form>
     </mat-card-content>
-    <div *ngIf="failedUpdate">
-      <p>Error in update process, please try again.</p>
+    <div *ngIf="failedAdd">
+      <p>Error in creating process, please try again.</p>
     </div>
 
     </mat-card>
 </mat-dialog-content>
+

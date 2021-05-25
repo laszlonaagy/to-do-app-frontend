@@ -23,6 +23,7 @@ import { UsertableComponent } from './usertable/usertable.component';
 import { MatTableModule } from '@angular/material/table';
 import { EditComponent } from './usertable/edit/edit.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { AddComponent } from './usertable/add/add.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     LoginComponent,
     RegistrationComponent,
     UsertableComponent,
-    EditComponent
+    EditComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

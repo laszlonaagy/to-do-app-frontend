@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddComponent } from '../usertable/add/add.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  showAddUserModal() {
+    const dialogRef = this.dialog.open(AddComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 
 }

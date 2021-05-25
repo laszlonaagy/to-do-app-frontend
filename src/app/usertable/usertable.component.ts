@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { AuthenticationService } from '../../Services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditComponent } from './edit/edit.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-usertable',
@@ -19,13 +20,16 @@ export class UsertableComponent implements OnInit {
   public dataSource; 
 
   ngOnInit(): void {
-
     this.auth.AuthEvent
     .subscribe((loggedIn) => {
       this.loggedIn = loggedIn;
       this.listUser();
     });
-    this.listUser();
+
+    if (this.loggedIn) {
+      this.listUser();
+    }
+
 
   }
 
@@ -65,6 +69,10 @@ export class UsertableComponent implements OnInit {
         
       }
     });
+  }
+
+  getImage(imageUrl: string): Observable<Blob> {
+    return this.http.get(imageUrl, { responseType: 'blob' });
   }
 
 }
