@@ -23,8 +23,3 @@ table {
     color: #c2185b;
     cursor: pointer; 
   }
-
-  .mat-row:hover {
-    background-color:darkgrey;
-    cursor: pointer;
-  }

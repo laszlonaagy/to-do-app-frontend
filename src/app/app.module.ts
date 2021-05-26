@@ -24,6 +24,10 @@ import { MatTableModule } from '@angular/material/table';
 import { EditComponent } from './usertable/edit/edit.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { AddComponent } from './usertable/add/add.component';
+import { TodoComponent } from './todo/todo.component';
+import { EditTodoComponent } from './todo/edit-todo/edit-todo.component';
+import { NewTodoComponent } from './todo/new-todo/new-todo.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,10 @@ import { AddComponent } from './usertable/add/add.component';
     RegistrationComponent,
     UsertableComponent,
     EditComponent,
-    AddComponent
+    AddComponent,
+    TodoComponent,
+    EditTodoComponent,
+    NewTodoComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +60,8 @@ import { AddComponent } from './usertable/add/add.component';
     MatButtonModule,
     MatTooltipModule,
     MatTableModule,
-    MatFileUploadModule
+    MatFileUploadModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

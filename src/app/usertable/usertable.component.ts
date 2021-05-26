@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../Services/authentication.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditComponent } from './edit/edit.component';
 import { Observable } from 'rxjs';
+import { TodoComponent } from '../todo/todo.component';
 
 @Component({
   selector: 'app-usertable',
@@ -29,8 +30,6 @@ export class UsertableComponent implements OnInit {
     if (this.loggedIn) {
       this.listUser();
     }
-
-
   }
 
   listUser() {
@@ -39,7 +38,6 @@ export class UsertableComponent implements OnInit {
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
     this.http.get(environment.api_url + '/users',{ headers: headers }).subscribe(response => {
-      console.log(response);
       this.dataSource = response;
     }, err => {
       console.log(err);
@@ -47,6 +45,7 @@ export class UsertableComponent implements OnInit {
   }
 
   deleteUser(user) {
+    event.stopPropagation();
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -59,20 +58,31 @@ export class UsertableComponent implements OnInit {
   }
 
   editUser(user) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(EditComponent, {
       data: user
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result)
-      {
-        
-      }
+      this.listUser();
     });
   }
 
   getImage(imageUrl: string): Observable<Blob> {
     return this.http.get(imageUrl, { responseType: 'blob' });
+  }
+
+  showTodos(row) {
+    const dialogRef = this.dialog.open(TodoComponent, {
+      data: row,
+      autoFocus: false,
+      maxHeight: '90vh',
+      minWidth: '90vh'  
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
 }

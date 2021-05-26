@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddComponent } from '../usertable/add/add.component';
+import { AuthenticationService } from '../../Services/authentication.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,9 +10,18 @@ import { AddComponent } from '../usertable/add/add.component';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  public loggedIn = localStorage['loggedIn'];
+  public profile_name = JSON.parse(localStorage['user']).name;
+  constructor(public dialog: MatDialog, private auth: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.auth.AuthEvent
+    .subscribe((loggedIn) => {
+      this.loggedIn = loggedIn;
+    });
+
+    if (this.loggedIn) {
+    }
   }
 
   showAddUserModal() {

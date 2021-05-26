@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { AuthenticationService } from '../Services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthenticationService) { }
   title = 'To Do Application';
 
   ngOnInit() {
@@ -20,12 +21,14 @@ export class AppComponent implements OnInit {
       });
       this.http.get(environment.api_url + '/me',{ headers: headers }).subscribe(response => {
         localStorage['loggedIn'] = true;
+        localStorage['user'] = JSON.stringify(response.data.item);
       }, err => {
         localStorage.clear();
       });
 
     } else {
       localStorage['loggedIn'] = false;
+      this.auth.authNotification(false);
     }
 
   }

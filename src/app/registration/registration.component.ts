@@ -78,7 +78,6 @@ export class RegistrationComponent implements OnInit {
       let headers = new HttpHeaders();
       headers = headers.set('Content-Type', 'application/json; charset=utf-8');
       this.http.post(environment.api_url + '/register', this.signUpForm.value).subscribe(response => {
-        localStorage['user'] = response;
         this.closeDialog();
       }, err => {
         this.failedReg = true;

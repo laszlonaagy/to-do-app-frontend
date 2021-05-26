@@ -10,5 +10,12 @@
 }
 
 #add-button {
-  margin-right: 100px !important;
+  margin-right: 30px !important;
+  background-color:rgb(66,66,66);
+}
+
+#profile_pic {
+  font-size: 30px;
+  margin-top: -5px;
+  margin-left: 10px;
 }

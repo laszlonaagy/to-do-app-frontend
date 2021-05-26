@@ -2,8 +2,10 @@
    <app-menu></app-menu>
     <span id="app-title">To Do Application</span>
     <span class="example-spacer"></span>
-    <button (click)="showAddUserModal()" id="add-button" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <button *ngIf="loggedIn" (click)="showAddUserModal()" id="add-button" mat-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>person_add</mat-icon>
+      New user
     </button>
+    {{ profile_name }}<mat-icon id="profile_pic">account_circle</mat-icon>
   </mat-toolbar>
 

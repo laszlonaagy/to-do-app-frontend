@@ -38,18 +38,18 @@ export class EditComponent implements OnInit, OnDestroy {
   @Output() submitEM = new EventEmitter();
 
   ngOnInit() {
-    console.log('data',this.data);
-
-    let headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    });
-    this.http.get(environment.api_url + '/user-image-download/' + this.data.image_path, { headers : headers , responseType: 'blob'}).subscribe(response => {
-      let unsafeImageUrl = URL.createObjectURL(response);
-      let imageUrl = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
-        this.filename = imageUrl;
-    }, err => {
-      console.log(err);
-    });
+    if(this.data.image_path !== '') {
+      let headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+      this.http.get(environment.api_url + '/user-image-download/' + this.data.image_path, { headers : headers , responseType: 'blob'}).subscribe(response => {
+        let unsafeImageUrl = URL.createObjectURL(response);
+        let imageUrl = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
+          this.filename = imageUrl;
+      }, err => {
+        console.log(err);
+      });
+    }
 
   }
 

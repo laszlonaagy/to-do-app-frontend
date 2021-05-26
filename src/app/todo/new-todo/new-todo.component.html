@@ -1,0 +1,48 @@
+<mat-dialog-content class="mat-typography">
+    <mat-card id="add-todo-card">
+    <mat-card-title>Add activity</mat-card-title>
+    <mat-card-content>
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+
+     <div>
+     <mat-form-field>
+        <input type="text" matInput placeholder="Title" formControlName="title">
+     </mat-form-field>
+    </div>
+
+      <div>
+        <mat-form-field>
+          <input type="textarea" matInput placeholder="Description" formControlName="description">
+        </mat-form-field>
+      </div>
+    
+      <div>
+        <mat-form-field>
+            <input formControlName="deadline" placeholder="Select deadline" matInput type="datetime-local" placeholder="start date">
+          </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Select priority</mat-label>
+            <mat-select formControlName="priority_value">
+              <mat-option *ngFor="let prio of priorities" [value]="prio.priority_value">
+                {{prio.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+    
+      <div class="button">
+        <button id="new-todo-button" type="submit" mat-button>Add activity</button>
+      </div>
+    
+    </form>
+    </mat-card-content>
+    <div *ngIf="failedAddTodo">
+      <p>Error in creating process, please try again.</p>
+    </div>
+    </mat-card>
+</mat-dialog-content>
+
+

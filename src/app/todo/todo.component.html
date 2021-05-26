@@ -1,0 +1,60 @@
+<mat-toolbar id="todo-toolbar" color="primary">
+     <span class="example-spacer"></span>
+     <button (click)="addTodo()" id="add-todo-button" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+     <mat-icon>add_circle</mat-icon>
+     Add activities
+     </button>
+   </mat-toolbar>
+<div id="todoBoard">
+    <div id="todoTable">
+    <table *ngIf="emptyTodo" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="deadline">
+      <th mat-header-cell *matHeaderCellDef> Deadline </th>
+      <td mat-cell *matCellDef="let element"> {{element.deadline | date: 'short'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="priority_value">
+        <th mat-header-cell *matHeaderCellDef> Priority </th>
+        <td mat-cell *matCellDef="let element"> {{element.priority_value}} </td>
+      </ng-container>
+
+    <ng-container matColumnDef="edit_todo">
+        <th mat-header-cell *matHeaderCellDef> Edit Activity</th>
+        <td (click)="editTodo(element)" class="edit-hover" mat-cell *matCellDef="let element">
+            <mat-icon >edit</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete_todo">
+        <th mat-header-cell *matHeaderCellDef> Delete Activity </th>
+        <td (click)="deleteTodo(element)" class="edit-hover" mat-cell *matCellDef="let element">
+            <mat-icon >delete</mat-icon></td>
+      </ng-container>
+
+      <ng-container matColumnDef="attachment">
+        <th mat-header-cell *matHeaderCellDef> Attachment </th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon >attachment</mat-icon></td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>
+  </div>
+
