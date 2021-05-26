@@ -11,7 +11,7 @@ import { AuthenticationService } from '../../Services/authentication.service';
 export class ToolbarComponent implements OnInit {
 
   public loggedIn = localStorage['loggedIn'];
-  public profile_name = JSON.parse(localStorage['user']).name;
+  public profile_name;
   constructor(public dialog: MatDialog, private auth: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -20,7 +20,8 @@ export class ToolbarComponent implements OnInit {
       this.loggedIn = loggedIn;
     });
 
-    if (this.loggedIn) {
+    if (typeof localStorage['token'] !== 'undefined') {
+      this.profile_name = JSON.parse(localStorage['user']).name;
     }
   }
 

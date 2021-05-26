@@ -6,6 +6,6 @@
       <mat-icon>person_add</mat-icon>
       New user
     </button>
-    {{ profile_name }}<mat-icon id="profile_pic">account_circle</mat-icon>
+    {{ profile_name }}<mat-icon *ngIf="loggedIn" id="profile_pic">account_circle</mat-icon>
   </mat-toolbar>
 

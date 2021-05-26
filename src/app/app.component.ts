@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       });
       this.http.get(environment.api_url + '/me',{ headers: headers }).subscribe(response => {
-        localStorage['loggedIn'] = true;
+        //localStorage['loggedIn'] = true;
+        console.log(response);
         localStorage['user'] = JSON.stringify(response.data.item);
       }, err => {
         localStorage.clear();
